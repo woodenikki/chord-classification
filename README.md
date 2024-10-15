@@ -2,36 +2,82 @@
 
 ## Business Understanding
 
-This project aims to solve the problem of automatically classifying musical chords as either major or minor using audio input. Chord identification is a key task in music analysis, and automating it can save time on transcription and harmonic analysis. By using machine learning and music information retrieval (MIR) techniques, the goal is to create a tool that helps musicians, producers, and educators analyze music in real-time. The project focuses on making chord recognition more accessible and efficient, benefiting both students and professionals in the music industry.
+This project addresses the challenge of accurately identifying musical chords as either major or minor using audio input. Manual chord transcription can be time-consuming and requires a solid grasp of music theory. By leveraging machine learning and audio processing techniques, this tool automates chord classification, providing real-time results that are valuable to musicians, music producers, and educators.
 
+### Stakeholders:
+
+- **Musicians** can use the tool to quickly identify chords during practice or live performances, enhancing learning and improvisation.
+- **Music Producers** benefit from real-time chord analysis, streamlining the composition and arrangement process.
+- **Educators** gain an interactive way to teach chord progressions and musical theory, helping students grasp harmonic relationships more effectively.
+
+### Conclusion:
+
+The model achieved 98% accuracy by utilizing data augmentation to balance the dataset, originally skewed towards major chords (502 major, 357 minor). Augmenting 143 minor chord samples created a more even distribution, improving classification performance. This tool has the potential to save time and improve the workflow for musicians, producers, and educators by automating chord recognition, making it more accessible and efficient.
 ---
 
 ## Tools/Methodologies
 
 To handle the workflow, I'll use several Python libraries:
 
-- [librosa](https://librosa.org/doc/latest/index.html) for extracting audio features, [numpy](https://numpy.org/doc/1.24/reference/index.html#reference) and [pandas](https://pandas.pydata.org/docs/reference/index.html#api) for data manipulation, and os and [Kaggle CLI](https://www.kaggle.com/code/donkeys/kaggle-python-api) to download the data directly into the notebook.
-- [matplotlib](https://matplotlib.org/stable/api/index.html) and [seaborn](https://seaborn.pydata.org/api.html) for exploring and visualizing features like waveforms and spectrograms.
-- [scikit-learn](https://scikit-learn.org/stable/api/index.html) for baseline models (e.g., logistic regression, SVM), and [tensorflow](https://www.tensorflow.org/api_docs/python/tf/all_symbols) or [keras](https://keras.io/api/) for building CNNs.
+- **Audio feature extraction**: `librosa`, `scipy`
+- **Data manipulation**: `numpy`, `pandas`
+- **Visualization**: `matplotlib`, `IPython.display`
+- **Machine Learning**: `scikit-learn`
+- **Dataset management**: `Kaggle API`
+- **Warning suppression**: `warnings` module
 
 ---
 
 ## Data Understanding
-The dataset used in this project is sourced from the [Musical Instrument Chord Classification (Audio)](https://www.kaggle.com/datasets/deepcontractor/musical-instrument-chord-classification) dataset on Kaggle. It contains audio files `.wav` format of chords played on two instruments: guitar and piano. The raw data has been scraped from various sources and is already available for download on Kaggle, eliminating the need for manual data collection. The dataset is well-suited for this project, as it provides a clear distinction between major and minor chords, which is the focus of the classification task.
 
-The features for the model will be extracted from the audio files using techniques such as Mel-frequency cepstral coefficients (MFCCs) or spectrograms, which capture important frequency and temporal information from the audio signals. Although other individuals may have used this dataset for similar chord classification tasks, this project will build upon existing work by focusing specifically on distinguishing between major and minor chords, potentially improving upon current models or exploring new machine learning techniques for this type of classification.
+The dataset used for this project is the [Musical Instrument Chord Classification (Audio)](https://www.kaggle.com/datasets/deepcontractor/musical-instrument-chord-classification) dataset from Kaggle. It consists of .wav audio files, containing major and minor chords played on guitar and piano. Since the dataset is readily available, it eliminates the need for manual data collection. The clear distinction between major and minor chords makes it highly suitable for this classification task.
+
+### Dataset Size and Features:
+
+#### Size: 
+> The dataset contains 859 audio samples—502 major chords and 357 minor chords. To balance the dataset, we applied augmentation, adding 143 minor chord samples, resulting in 500 samples for each class.
+
+#### Features: 
+> While earlier iterations explored features such as Mel-frequency cepstral coefficients (MFCCs), Chroma, Spectral centroid, zero-crossing rate, and Mel-spectrograms, the final model focuses exclusively on harmonic content. Specifically, harmonic ratios were extracted and analyzed to capture the major/minor third distinction. These selected harmonic ratios were identified both visually and through statistical analysis, with a p-value < 0.05, indicating their statistical significance in distinguishing between major and minor chords.
+
+The experimental exploration of other features and iterations can be found in the accompanying `workbook.ipynb`, but the final model is built solely on harmonic extraction and analysis.
+
+### Harmonic Ratio Features:
+
+Harmonic ratios directly reflect the intervals between notes in a chord, which is the key distinction between major and minor chords. The visually and statistically significant harmonic ratios make this approach highly relevant for the classification task, focusing precisely on the differences between the two chord types.
+
+#### Data Limitations:
+
+One limitation of the dataset is its restriction to two instruments: guitar and piano. This limits the model's applicability to other instruments, as the harmonic content of chords can vary with timbre. Additionally, the dataset lacks variation in dynamics and playing styles, which might affect chord recognition in diverse musical contexts. Therefore, while the model performs well on this dataset, its generalization to other instruments or more complex real-world music may be limited.
 
 ---
 
 ## Data Preparation
 
-The dataset consists of raw .wav files, so no traditional tabular data is available. Preprocessing will involve extracting features like MFCCs, spectrograms, or chroma features to transform the audio into usable data. Challenges include ensuring that these features correctly capture the harmonic information while handling variations in recording quality and instrument type. We estimate several hundred rows of data, each representing an individual chord sample. Visualizations like waveform plots and spectrograms will be used to explore the features that distinguish major from minor chords.
+The distinction between major and minor chords lies in the intervals between their constituent notes, particularly the major and minor third intervals. By analyzing the harmonics of audio signals, we can accurately capture these relationships, as the harmonics are directly tied to the frequencies that define the chord's structure.
+
+The extraction functions were designed to isolate and analyze these harmonics using Fourier transforms, which break down the audio signal into its individual frequency components. This allows us to identify not just the fundamental frequencies, but also their harmonic overtones, giving a clear picture of the harmonic intervals that characterize each chord. The harmonic intervals and ratios extracted through these functions provide precise and relevant data for distinguishing between major and minor chords, making this approach both targeted and effective for the problem at hand.
+
+By using only the harmonic content for the final model, we focused on the core features essential to chord classification, ensuring both the relevance and efficiency of the feature extraction process.
 
 ---
 
 ## Modeling
 
-This is a classification problem, with the goal of predicting whether a chord is major or minor. The initial plan is to use a basic model like logistic regression or SVM as a baseline. After extracting features like MFCCs or spectrograms, we will establish the baseline and then experiment with more advanced models like convolutional neural networks (CNNs) to improve accuracy.
+This is a classification problem, with the goal of predicting whether a chord is major or minor. I went through multiple iterations while developing this model. First, I'll define a baseline using a dummy classifier, followed by a summary of key highlights from the other iterations, before presenting the final model: a Random Forest Classifier.
+
+### Evaluation
+
+Our final confusion matrix shows that the model made only 4 misclassifications (2 for each class), confirming that it has a high degree of accuracy in distinguishing between major and minor chords.
+
+### Confusion Matrix
+
+|               | Predicted Major | Predicted Minor |
+|---------------|:---------------:|:---------------:|
+| **Actual Major** |      98         |       2         |
+| **Actual Minor** |      2          |      70         |
+
+Several misclassifications were initially identified in the model's predictions, but upon closer analysis, it was found that some of these chords were mislabeled in the dataset. The model correctly identified complex harmonic structures, such as augmented and extended chords, which were likely misinterpreted due to the data labeling. This highlights the need for careful data validation when dealing with nuanced musical elements.
 
 ---
 
