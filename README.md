@@ -71,7 +71,7 @@ We’re delivering the results through a **Streamlit** web app. Users can upload
 
 - **[final_notebook.ipynb](final_notebook.ipynb)**: Contains all steps for developing the final model, including data preparation, feature extraction, model training, and evaluation.
 - **[workbook.ipynb](workbook.ipynb)**: This notebook covers exploratory data analysis, experimental models, unofficial feature extraction (not used in the final model), and other workflow-related activities.
-- **kaggle.json**: Template file for accessing the Kaggle API to download the dataset. You will need to update this file with your own Kaggle credentials.
+- **[kaggle.json](kaggle.json)**: Template file for accessing the Kaggle API to download the dataset. You will need to update this file with your own Kaggle credentials.
 - **[slides.pdf](slides.pdf)**: Final presentation slides summarizing the project and results.
 - **[app.py](app.py)**: Python code for the Streamlit app, which provides real-time chord classification via a web interface.
 
