@@ -1,4 +1,5 @@
-# Chord Classification Project
+# Chord Classification
+My capstone project for the Flatiron School's Data Science Bootcamp Capstone.
 
 ## Overview
 
