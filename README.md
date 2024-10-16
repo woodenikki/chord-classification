@@ -61,12 +61,6 @@ Although some initial misclassifications were made, closer inspection revealed l
 
 ---
 
-## Deployment
-
-We’re delivering the results through a **Streamlit** web app. Users can upload or record audio to classify chords in real time. The app will provide visual feedback, including waveforms, and it will be hosted on Streamlit Cloud for easy access.
-
----
-
 ## Repository
 
 - **[final_notebook.ipynb](final_notebook.ipynb)**: Contains all steps for developing the final model, including data preparation, feature extraction, model training, and evaluation.
