@@ -78,7 +78,7 @@
     <script>
         const keys = document.querySelectorAll('.white-key, .black-key');
         let selectedNotes = [];
-
+    
         keys.forEach(key => {
             key.addEventListener('click', () => {
                 key.classList.toggle('active');
@@ -88,11 +88,12 @@
                 } else {
                     selectedNotes.push(note);
                 }
-                // Send selected notes back to Streamlit
-                const notes = selectedNotes.join(',');
-                window.parent.postMessage({ type: 'setSelectedNotes', notes: notes }, '*');
+                // Send the selected notes to Streamlit via postMessage
+                window.parent.postMessage({ type: 'selected_notes', notes: selectedNotes }, '*');
             });
         });
     </script>
+    
+    
 </body>
 </html>

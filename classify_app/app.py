@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import sounddevice as sd
 from scipy.signal import find_peaks
+import streamlit.components.v1 as components
 import librosa
 import os
 import pickle
@@ -26,6 +27,11 @@ note_filenames = {
     'C#5': 'c-5.mp3', 'D5': 'd5.mp3', 'D#5': 'd-5.mp3', 'E5': 'e5.mp3', 'F5': 'f5.mp3',
     'F#5': 'f-5.mp3', 'G5': 'g5.mp3', 'G#5': 'g-5.mp3', 'A5': 'a5.mp3', 'A#5': 'a-5.mp3', 'B5': 'b5.mp3'
 }
+
+# Load and render the piano HTML
+def load_piano_html():
+    with open('piano.html', 'r') as file:
+        return file.read()
 
 # Function to load piano samples
 def load_note_sample(note):
@@ -122,6 +128,11 @@ st.title('Chord Classification App')
 st.write("Press the keys to select notes for the chord:")
 selected_notes = st.multiselect("Select notes", options=list(note_filenames.keys()))
 
+piano_html = load_piano_html()
+components.html(piano_html, height=300, scrolling=False)
+
+# ** Listen for messages sent by the frontend's `postMessage` **
+selected_notes = st.experimental_get_query_params().get('selected_notes')
 if selected_notes:
     st.write(f"Selected notes: {', '.join(selected_notes)}")
 
