@@ -67,7 +67,6 @@ Although some initial misclassifications were made, closer inspection revealed l
 - **[workbook.ipynb](workbook.ipynb)**: This notebook covers exploratory data analysis, experimental models, unofficial feature extraction (not used in the final model), and other workflow-related activities.
 - **[kaggle.json](kaggle.json)**: Template file for accessing the Kaggle API to download the dataset. You will need to update this file with your own Kaggle credentials.
 - **[slides.pdf](slides.pdf)**: Final presentation slides summarizing the project and results.
-- **[app.py](app.py)**: Python code for the Streamlit app, which provides real-time chord classification via a web interface.
 
 ---
 
