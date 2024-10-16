@@ -71,7 +71,7 @@ We’re delivering the results through a **Streamlit** web app. Users can upload
 
 - **[final_notebook.ipynb](final_notebook.ipynb)**: Contains all steps for developing the final model, including data preparation, feature extraction, model training, and evaluation.
 - **[workbook.ipynb](workbook.ipynb)**: This notebook covers exploratory data analysis, experimental models, unofficial feature extraction (not used in the final model), and other workflow-related activities.
-- **kaggle.json**: Template file for accessing the Kaggle API to download the dataset. You will need to update this file with your own Kaggle credentials.
+- **[kaggle.json](kaggle.json)**: Template file for accessing the Kaggle API to download the dataset. You will need to update this file with your own Kaggle credentials.
 - **[slides.pdf](slides.pdf)**: Final presentation slides summarizing the project and results.
 - **[app.py](app.py)**: Python code for the Streamlit app, which provides real-time chord classification via a web interface.
 
@@ -116,13 +116,7 @@ To reproduce the project, follow these steps:
       }
       ```
       Replace `"your_kaggle_username"` and `"your_kaggle_api_key"` with the actual values from your Kaggle account.
+      Additionally, if you are running this on Google Colab - and not cloning the entire repo - there are cells in the final_notebook to hold your access key and username.
 
-   d. **Test Kaggle API access**:
-      - After setting up the `kaggle.json` file, test that it’s working by running:
-        ```bash
-        kaggle datasets list
-        ```
-      - If everything is set up correctly, this will return a list of available Kaggle datasets.
-
-4. **Run final_notebook.ipynb**
+5. **Run final_notebook.ipynb**
     This should download the dataset for you (using the Kaggle API you just set up).
